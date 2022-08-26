@@ -1,63 +1,63 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/context";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const { logout, user } = useContext(AuthContext);
+  const handleLogout = () => {
+    logout();
+    navigate("/auth/login");
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Heroes App
+        <a className="navbar-brand" href="/marvel">
+          {user}' Heroes App
         </a>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                aria-current="page"
+                to="/marvel"
               >
-                Dropdown
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
+                Marvel
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link disabled">Disabled</a>
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                aria-current="page"
+                to="/dc"
+              >
+                Dc comics
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`
+                }
+                aria-current="page"
+                to="/search"
+              >
+                Search
+              </NavLink>
             </li>
           </ul>
 
-          <button className="d-flex btn btn-outline-success" type="submit">
-            Search
+          <button
+            className="d-flex btn btn-outline-dark"
+            type="button"
+            onClick={handleLogout}
+          >
+            Logout
           </button>
         </div>
       </div>
